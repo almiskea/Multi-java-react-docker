@@ -1,0 +1,22 @@
+sudo: required
+services:
+    - docker
+
+before_install:
+  - docker build -t almiskea/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run almiskea/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t almiskea/multi-client ./client
+  - docker build -t almiskea/multi-nginx ./nginx
+  - docker build -t almiskea/multi-server ./OktaDemo
+  - docker build -t almiskea/multi-worker ./Worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push almiskea/multi-client
+  - docker push almiskea/multi-nginx
+  - docker push almiskea/multi-server
+  - docker push almiskea/multi-worker
