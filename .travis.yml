@@ -1,6 +1,6 @@
 sudo: required
-services:
-    - docker
+services: 
+  - docker
 
 before_install:
   - docker build -t almiskea/react-test -f ./client/Dockerfile.dev ./client
@@ -12,23 +12,22 @@ after_success:
   - docker build -t almiskea/multi-client ./client
   - docker build -t almiskea/multi-nginx ./nginx
   - docker build -t almiskea/multi-server ./OktaDemo
-  - docker build -t almiskea/multi-worker ./Worker
-  # Log in to the docker CLI
+  - dockr build -t almiskea/multi-worker ./Worker
+  #Login to the Docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  # Take those images and push them to docker hub
+  # Take those images and push
   - docker push almiskea/multi-client
   - docker push almiskea/multi-nginx
   - docker push almiskea/multi-server
   - docker push almiskea/multi-worker
 
-
-deploy: 
+deploy:
   provider: elasticbeanstalk
-  region: us-west-2
-  app: multi-docker-java
-  env: MultiDockerJava-env
-  bucket_name: elasticbeanstalk-us-west-2-619677518466
-  bucket_path: docker-multi
+  region: "us-west-2"
+  app: "multi-docker-java"
+  env: "MultiDockerJava-env"
+  bucket_name: "elasticbeanstalk-us-west-2-619677518466"
+  bucket_path: "docker-multi"
   on:
     branch: master
   access_key_id: $AWS_ACCESS_KEY
