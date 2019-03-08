@@ -20,3 +20,17 @@ after_success:
   - docker push almiskea/multi-nginx
   - docker push almiskea/multi-server
   - docker push almiskea/multi-worker
+
+
+  deploy: 
+    provider: elasticbeanstalk
+    region: us-west-2
+    app: multi-docker-java
+    env: MultiDockerJava-env
+    bucket_name: elasticbeanstalk-us-west-2-619677518466
+    bucket_path: docker-multi
+    on:
+      branch: master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: 
+      secure: $AWS_SECRET_KEY
