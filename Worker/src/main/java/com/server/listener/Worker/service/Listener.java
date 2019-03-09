@@ -42,7 +42,7 @@ public class Listener implements RedisPubSubListener<String, String> {
     }
     @Override
     public void message(String channel, String message) {
-        System.out.println("Got "+message+" on channel "+channel);
+        System.out.println("Got \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"+message+"\n\n\n\n\n\n\n on channel "+channel);
         //redisClient.hset('values', message, fib(parseInt(message)));
         //fib(parseInt(message)).toString()
         syncCommands.hset("values", message, fib(parseInt(message)).toString());
