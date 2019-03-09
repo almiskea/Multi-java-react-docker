@@ -13,14 +13,14 @@
       "image": "almiskea/multi-server",
       "hostname": "api",
       "essential": false,
-      "memory": 128
+      "memory": 1770
     },
     {
       "name": "worker",
       "image": "almiskea/multi-worker",
       "hostname": "worker",
       "essential": false,
-      "memory": 128
+      "memory": 1770
     },
     {
       "name": "nginx",
