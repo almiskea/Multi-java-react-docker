@@ -8,17 +8,26 @@ import io.lettuce.core.pubsub.api.async.RedisPubSubAsyncCommands;
 import io.lettuce.core.pubsub.api.sync.RedisPubSubCommands;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 
 import static java.lang.Integer.parseInt;
 
+@PropertySource("application.properties")
 public class Listener implements RedisPubSubListener<String, String> {
 
     @Qualifier("publisher")
     @Autowired
     RedisPubSubCommands<String, String> async;
 
+    @Value("${redis.hostname}")
+    private String redisHostName;
+
+    @Value("${redis.port}")
+    private int redisPort;
+
     RedisClient redisClient = RedisClient
-            .create("redis://redis:6379/");
+            .create("redis://"+redisHostName+":"+redisPort+"/");
     StatefulRedisConnection<String, String> connection
             = redisClient.connect();
     RedisCommands<String, String> syncCommands = connection.sync();
