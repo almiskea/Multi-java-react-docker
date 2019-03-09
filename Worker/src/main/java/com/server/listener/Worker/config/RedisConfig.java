@@ -2,6 +2,8 @@ package com.server.listener.Worker.config;
 
 import com.server.listener.Worker.service.Listener;
 import io.lettuce.core.RedisClient;
+import io.lettuce.core.api.StatefulRedisConnection;
+import io.lettuce.core.api.sync.RedisCommands;
 import io.lettuce.core.pubsub.StatefulRedisPubSubConnection;
 import io.lettuce.core.pubsub.api.async.RedisPubSubAsyncCommands;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,29 +22,22 @@ public class RedisConfig {
     private int redisPort;
 
     @Bean
-    void listener(){
+    public void listener(){
         RedisClient client = RedisClient
                 .create("redis://"+redisHostName+":"+redisPort+"/");
 
         StatefulRedisPubSubConnection<String, String> connection
                 = client.connectPubSub();
-        connection.addListener(new Listener());
+
+        RedisClient redisClient = RedisClient
+                .create("redis://"+redisHostName+":"+redisPort+"/");
+        StatefulRedisConnection<String, String> connection2
+                = redisClient.connect();
+
+        connection.addListener(new Listener(connection2.sync()));
 
         RedisPubSubAsyncCommands<String, String> async = connection.async();
         async.subscribe("insert");
-    }
-
-    @Bean
-    RedisPubSubAsyncCommands<String, String> publisher(){
-        RedisClient client = RedisClient
-                .create("redis://"+redisHostName+":"+redisPort+"/");
-
-        StatefulRedisPubSubConnection<String, String> connection
-                = client.connectPubSub();
-
-        RedisPubSubAsyncCommands<String, String> async
-                = connection.async();
-        return async;
     }
 
 }
