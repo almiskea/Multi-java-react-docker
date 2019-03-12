@@ -23,7 +23,6 @@ public class RedisConfig {
 
     @Bean
     public void listener(){
-        System.out.println("\n\n\n\nAli\n\n\n\n\n\n\nredis://"+redisHostName+":"+redisPort+"/\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         RedisClient client = RedisClient
                 .create("redis://"+redisHostName+":"+redisPort+"/");
 
