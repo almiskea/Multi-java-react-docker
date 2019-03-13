@@ -36,7 +36,7 @@ public class RedisConfig {
                 = redisClient.connect();
 
 
-        connection.addListener(new Listener(connection2.sync()));
+//        connection.addListener(new Listener(connection2.sync()));
 
         RedisPubSubAsyncCommands<String, String> async = connection.async();
         async.subscribe("insert");
