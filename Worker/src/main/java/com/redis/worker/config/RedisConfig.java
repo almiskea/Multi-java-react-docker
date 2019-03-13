@@ -1,9 +1,8 @@
-package com.server.listener.Worker.config;
+package com.redis.worker.config;
 
-import com.server.listener.Worker.service.Listener;
+import com.redis.worker.watch.Listener;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.api.StatefulRedisConnection;
-import io.lettuce.core.api.sync.RedisCommands;
 import io.lettuce.core.pubsub.StatefulRedisPubSubConnection;
 import io.lettuce.core.pubsub.api.async.RedisPubSubAsyncCommands;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +14,7 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource("application.properties")
 public class RedisConfig {
 
-    @Value("${redis.hostname}")
+    @Value("${redis.host}")
     private String redisHostName;
 
     @Value("${redis.port}")
@@ -34,6 +33,7 @@ public class RedisConfig {
         StatefulRedisConnection<String, String> connection2
                 = redisClient.connect();
 
+
         connection.addListener(new Listener(connection2.sync()));
 
         RedisPubSubAsyncCommands<String, String> async = connection.async();
@@ -41,4 +41,3 @@ public class RedisConfig {
     }
 
 }
-

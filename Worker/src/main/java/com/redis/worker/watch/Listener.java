@@ -1,4 +1,5 @@
-package com.server.listener.Worker.service;
+package com.redis.worker.watch;
+
 import io.lettuce.core.api.sync.RedisCommands;
 import io.lettuce.core.pubsub.RedisPubSubListener;
 

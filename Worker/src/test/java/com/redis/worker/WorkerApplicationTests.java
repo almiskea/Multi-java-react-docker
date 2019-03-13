@@ -1,4 +1,4 @@
-package com.server.listener.Worker;
+package com.redis.worker;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
