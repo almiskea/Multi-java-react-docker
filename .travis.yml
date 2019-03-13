@@ -12,7 +12,7 @@ after_success:
   - docker build -t almiskea/multi-client ./client
   - docker build -t almiskea/multi-nginx ./nginx
   - docker build -t almiskea/multi-server ./OktaDemo
-  - dockr build -t almiskea/multi-worker ./Worker
+  - docker build -t almiskea/multi-worker ./Worker
   #Login to the Docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push
@@ -29,6 +29,6 @@ deploy:
   bucket_name: "elasticbeanstalk-us-west-2-619677518466"
   bucket_path: "docker-multi"
   on:
-    branch: master
+    branch: prod2
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_SECERT_KEY
